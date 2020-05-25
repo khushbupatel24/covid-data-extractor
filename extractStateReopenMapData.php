@@ -9,13 +9,16 @@ $finder = new DomXPath($dom);
 $date = '';
 foreach ($dom->getElementsByTagName('time') as $ele) {
     $date = $ele->nodeValue;
+    $date = str_ireplace('Updated ', '', $date);
+    $date = date_create_from_format("F d, Y", $date);
+    $date = date_format($date, "d-m-Y");
     break;
 }
 
 $classname = "g-state g-cat-reopening";
 $nodes = $finder->query("//*[contains(@class, '$classname')]");
 
-$fp = fopen("state data -${date}.csv","w");
+$fp = fopen("nyt-${date}.csv", "w");
 fputcsv($fp, ['status', 'state']);
 
 $reopeningStates = [];

@@ -18,7 +18,7 @@ foreach ($dom->getElementsByTagName('time') as $ele) {
 $classname = "g-state g-cat-reopening";
 $nodes = $finder->query("//*[contains(@class, '$classname')]");
 
-$fp = fopen("nyt-${date}.csv", "w");
+$fp = fopen("data/nyt-${date}.csv", "w");
 fputcsv($fp, ['status', 'state']);
 
 $reopeningStates = [];

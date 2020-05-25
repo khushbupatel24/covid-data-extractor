@@ -4,7 +4,7 @@ if (!ini_set('default_socket_timeout', 15)) echo "<!-- unable to change socket t
 
 // extract "ICU Beds Occupied" tab data from spreadsheet
 $spreadsheet_url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vStD_EMR9El7agVp-Oi6d1c5EMAOYgoYOsSc2xhwzht1ae4Fku7F6zSmF4PB9J_aHA1DAb2PpAelomO/pub?gid=2057441901&single=true&output=csv";
-$fp = fopen(dirname(__FILE__)."/ICUBedsOccupied.csv", "w");
+$fp = fopen(dirname(__FILE__)."/data/ICUBedsOccupied.csv", "w");
 
 if (($handle = fopen($spreadsheet_url, "r")) !== FALSE) {
     $data = fgetcsv($handle);

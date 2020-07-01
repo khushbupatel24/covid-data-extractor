@@ -157,7 +157,7 @@ foreach ($result as $state => $value) {
     foreach ($value as $month => $rate) {
         $data[] = $rate;
     }
-    fputcsv($fp, $result);
+    fputcsv($fp, $data);
 }
 fclose($fp);
 exit();

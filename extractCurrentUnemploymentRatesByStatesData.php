@@ -152,10 +152,20 @@ foreach ($jsonData as $key => $value) {
 
 $fp = fopen(dirname(__FILE__) . "/data/unemploymentRates.csv", "w");
 foreach ($result as $state => $value) {
+    $header = null;
+    if ($state == array_key_first($result)) {
+        $header[] = 'state';
+    }
     $data = null;
     $data[] = $state;
     foreach ($value as $month => $rate) {
+        if ($state == array_key_first($result)) {
+            $header[] = $month;
+        }
         $data[] = $rate;
+    }
+    if ($header != null) {
+        fputcsv($fp, $header);
     }
     fputcsv($fp, $data);
 }

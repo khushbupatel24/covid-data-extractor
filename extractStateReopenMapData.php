@@ -15,7 +15,7 @@ foreach ($dom->getElementsByTagName('time') as $ele) {
     break;
 }
 
-$classname = "g-state g-cat-reopening";
+$classname = "g-state g-cat-reopened ";
 $nodes = $finder->query("//*[contains(@class, '$classname')]");
 
 $fp = fopen(dirname(__FILE__)."/data/nyt-${date}.csv", "w");
@@ -24,38 +24,38 @@ fputcsv($fp, ['status', 'state']);
 $reopeningStates = [];
 foreach ($nodes as $key => $ele) {
     foreach ($ele->getElementsByTagName('div') as $divTag) {
-        fputcsv($fp, ['reopening', trim($divTag->nodeValue)]);
+        fputcsv($fp, ['reopened', trim($divTag->nodeValue)]);
         break;
     }
 }
 
-$classname = "g-state g-cat-regional";
+$classname = "g-state g-cat-forward ";
 $nodes = $finder->query("//*[contains(@class, '$classname')]");
 
 foreach ($nodes as $key => $ele) {
     foreach ($ele->getElementsByTagName('div') as $divTag) {
-        fputcsv($fp, ['regional', trim($divTag->nodeValue)]);
+        fputcsv($fp, ['forward', trim($divTag->nodeValue)]);
         break;
     }
 }
 
-$classname = "g-state g-cat-soon";
+$classname = "g-state g-cat-pausing ";
 $nodes = $finder->query("//*[contains(@class, '$classname')]");
 
 foreach ($nodes as $key => $ele) {
     foreach ($ele->getElementsByTagName('div') as $divTag) {
-        fputcsv($fp, ['opening-soon', trim($divTag->nodeValue)]);
+        fputcsv($fp, ['pausing', trim($divTag->nodeValue)]);
         break;
     }
 }
 
-$classname = "g-state g-cat-shutdown-restricted";
+$classname = "g-state g-cat-reversing ";
 $nodes = $finder->query("//*[contains(@class, '$classname')]");
 
 $restrictedStates = [];
 foreach ($nodes as $key => $ele) {
     foreach ($ele->getElementsByTagName('div') as $divTag) {
-        fputcsv($fp, ['restricted', trim($divTag->nodeValue)]);
+        fputcsv($fp, ['reversing', trim($divTag->nodeValue)]);
         break;
     }
 }

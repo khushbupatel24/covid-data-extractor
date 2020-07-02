@@ -15,48 +15,32 @@ foreach ($dom->getElementsByTagName('time') as $ele) {
     break;
 }
 
-$classname = "g-state g-cat-reopened ";
+$classname = "g-key-entries";
 $nodes = $finder->query("//*[contains(@class, '$classname')]");
 
-$fp = fopen(dirname(__FILE__)."/data/nyt-${date}.csv", "w");
+$status = [];
+foreach ($nodes as $key => $ele) {
+    foreach ($ele->getElementsByTagName('span') as $spanTag) {
+        if (!empty($spanTag->nodeValue)) {
+            $status[] = strtolower(trim($spanTag->nodeValue));
+        }
+    }
+}
+$status = array_unique($status);
+
+$fp = fopen(dirname(__FILE__) . "/data/nyt-${date}.csv", "w");
 fputcsv($fp, ['status', 'state']);
 
-$reopeningStates = [];
-foreach ($nodes as $key => $ele) {
-    foreach ($ele->getElementsByTagName('div') as $divTag) {
-        fputcsv($fp, ['reopened', trim($divTag->nodeValue)]);
-        break;
-    }
-}
+foreach ($status as $statusValue)
+{
+    $classname = "g-state g-cat-${statusValue}";
+    $nodes = $finder->query("//*[contains(@class, '$classname')]");
 
-$classname = "g-state g-cat-forward ";
-$nodes = $finder->query("//*[contains(@class, '$classname')]");
-
-foreach ($nodes as $key => $ele) {
-    foreach ($ele->getElementsByTagName('div') as $divTag) {
-        fputcsv($fp, ['forward', trim($divTag->nodeValue)]);
-        break;
-    }
-}
-
-$classname = "g-state g-cat-pausing ";
-$nodes = $finder->query("//*[contains(@class, '$classname')]");
-
-foreach ($nodes as $key => $ele) {
-    foreach ($ele->getElementsByTagName('div') as $divTag) {
-        fputcsv($fp, ['pausing', trim($divTag->nodeValue)]);
-        break;
-    }
-}
-
-$classname = "g-state g-cat-reversing ";
-$nodes = $finder->query("//*[contains(@class, '$classname')]");
-
-$restrictedStates = [];
-foreach ($nodes as $key => $ele) {
-    foreach ($ele->getElementsByTagName('div') as $divTag) {
-        fputcsv($fp, ['reversing', trim($divTag->nodeValue)]);
-        break;
+    foreach ($nodes as $key => $ele) {
+        foreach ($ele->getElementsByTagName('div') as $divTag) {
+            fputcsv($fp, [$statusValue, trim($divTag->nodeValue)]);
+            break;
+        }
     }
 }
 

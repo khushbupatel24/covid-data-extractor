@@ -28,6 +28,7 @@ foreach ($nodes as $key => $ele) {
 }
 $status = array_unique($status);
 
+$date = date("d-m-Y");
 $fp = fopen(dirname(__FILE__) . "/data/nyt-${date}.csv", "w");
 fputcsv($fp, ['status', 'state']);
 

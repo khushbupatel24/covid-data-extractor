@@ -75,7 +75,7 @@ $data = [
 ];
 
 $response = curlPost($data);
-print_r(json_encode($response));
+// print_r(json_encode($response));
 $series = $response['Results']['series'];
 
 foreach ($series as $value) {
@@ -147,7 +147,7 @@ foreach ($series as $value) {
 $result = [];
 foreach ($jsonData as $key => $value) {
     $stateCode = substr($key, 5, 2);
-    $result[$stateCodes[$stateCode]] = $value;
+    $result[rtrim($stateCodes[$stateCode])] = $value;
 }
 
 $isFirst = true;

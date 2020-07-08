@@ -1,49 +1,24 @@
 <?php
 
-$url = "https://www.statista.com/statistics/1107209/unemployment-insurance-initial-claims-weekly-state-us/";
+$url = "https://oui.doleta.gov/unemploy/csv/ar539.csv";
 
-$dom = new DOMDocument;
-$dom->loadHTMLFile($url);
-
-$finder = new DomXPath($dom);
-
-// table having classname "statisticChart statisticChart--typeTable"
-$classname = "statisticChart statisticChart--typeTable";
-$nodes = $finder->query("//*[contains(@class, '$classname')]");
-
-$unemploymentClaimsData = [];
-foreach ($nodes as $key => $ele) {
-    foreach ($ele->getElementsByTagName('table') as $table) {
-        // fetch table headers
-        foreach ($table->getElementsByTagName('thead') as $tableBody) {
-            foreach ($tableBody->getElementsByTagName('tr') as $tr) {
-                foreach ($tr->getElementsByTagName('th') as $th) {
-                    $unemploymentClaimsData['header'][] = $th->nodeValue;
-                }
-                break;
+if (($handle = fopen($url, "r")) !== false) {
+    $firstRow = true;
+    $aData = array();
+    while (($data = fgetcsv($handle)) !== false) {
+        if ($firstRow) {
+            $headers = array_values($data);
+            $headers = [$headers[0], $headers[3], $headers[4]];
+            $firstRow = false;
+        } else {
+            $record = array_values($data);
+            $date = date_create_from_format("m/d/Y", $data[3]);
+            if($date > date_create_from_format("m/d/Y", '01/01/2020')) {
+                $aData[] = array_combine($headers, [$record[0], $record[3], $record[4]]);
             }
-            break;
-        }
-
-        // fetch table data
-        foreach ($table->getElementsByTagName('tbody') as $tableBody) {
-            foreach ($tableBody->getElementsByTagName('tr') as $tr) {
-                foreach ($tr->getElementsByTagName('td') as $key => $td) {
-                    if($key == 0) {
-                        $state = $td->nodeValue;
-                    }
-                    $unemploymentClaimsData[$state][] = $td->nodeValue;
-                }
-            }
-            break;
         }
     }
+    fclose($handle);
 }
 
-$fp = fopen(dirname(__FILE__) . "/data/unemploymentClaims.csv", "w");
-foreach ($unemploymentClaimsData as $key => $value) {
-    fputcsv($fp, $value);
-}
-
-fclose($fp);
-exit();
+print_r(json_encode($aData));

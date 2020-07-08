@@ -75,8 +75,10 @@ $data = [
 ];
 
 $response = curlPost($data);
-print_r(json_encode($response));
-exit();
+if (!isset($response['Results']['series'])) {
+    exit();
+}
+// print_r(json_encode($response));
 $series = $response['Results']['series'];
 
 foreach ($series as $value) {

@@ -11,7 +11,7 @@ if (($handle = fopen($url, "r")) !== false) {
     while (($data = fgetcsv($handle)) !== false) {
         if ($firstRow) {
             $headers = array_values($data);
-            fputcsv($fp, [$headers[0], $headers[3], $headers[4]]);
+            fputcsv($fp, ['state', 'date', 'claims']);
             $firstRow = false;
         } else {
             $record = array_values($data);

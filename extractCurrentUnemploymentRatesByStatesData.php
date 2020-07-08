@@ -75,7 +75,8 @@ $data = [
 ];
 
 $response = curlPost($data);
-// print_r(json_encode($response));
+print_r(json_encode($response));
+exit();
 $series = $response['Results']['series'];
 
 foreach ($series as $value) {

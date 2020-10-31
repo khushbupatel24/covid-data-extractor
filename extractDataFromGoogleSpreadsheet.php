@@ -17,6 +17,8 @@ if (($handle = fopen($spreadsheet_url, "r")) !== FALSE) {
 } else
     die("Problem reading ICU Beds Occupied csv");
 
+print_r("done ICU Beds Occupied csv");
+
 // extract "CDC - Gaiting Criteria" tab data from spreadsheet
 $spreadsheet_url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vStD_EMR9El7agVp-Oi6d1c5EMAOYgoYOsSc2xhwzht1ae4Fku7F6zSmF4PB9J_aHA1DAb2PpAelomO/pub?gid=852575640&single=true&output=csv";
 
@@ -33,7 +35,7 @@ if (($handle = fopen($spreadsheet_url, "r")) !== FALSE) {
 } else
     die("Problem reading CDC - Gaiting Criteria csv");
 
-print_r("done");
+print_r("done CDC - Gaiting Criteria");
 
 // extract "Population" tab data from spreadsheet
 //$spreadsheet_url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vStD_EMR9El7agVp-Oi6d1c5EMAOYgoYOsSc2xhwzht1ae4Fku7F6zSmF4PB9J_aHA1DAb2PpAelomO/pub?gid=712897421&single=true&output=csv";
@@ -69,7 +71,7 @@ if (($handle = fopen($spreadsheet_url, "r")) !== FALSE) {
 } else
     die("Problem reading Data for website csv");
 
-print_r("done");
+print_r("done Data for website");
 
 // extract "Interventions & Measures - Data" tab data from spreadsheet
 $spreadsheet_url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vStD_EMR9El7agVp-Oi6d1c5EMAOYgoYOsSc2xhwzht1ae4Fku7F6zSmF4PB9J_aHA1DAb2PpAelomO/pub?gid=1459999830&single=true&output=csv";
@@ -89,5 +91,5 @@ if (($handle = fopen($spreadsheet_url, "r")) !== FALSE) {
 } else
     die("Problem reading Interventions & Measures - Data csv");
 
-print_r("done");
+print_r("done Interventions & Measures");
 

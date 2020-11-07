@@ -15,7 +15,6 @@ if (($handle = fopen($url, "r")) !== false) {
             $firstRow = false;
         } else {
             $record = array_values($data);
-            print_r($record);
             $date = date_create_from_format("m/d/Y", $data[3]);
             if ($date > date_create_from_format("m/d/Y", '01/01/2020')) {
                 fputcsv($fp, [$record[0], $record[3], $record[4]]);
